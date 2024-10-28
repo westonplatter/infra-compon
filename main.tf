@@ -42,6 +42,14 @@ variable "docker_lambda_entry_point" {
   default = []
 }
 
+variable "lambda_environment_variables" {
+  type = map(string)
+  description = "The environment variables to set in the lambda function"
+  default = {
+    "PLATFORM"     = "aws_lambda",
+    "LOGURU_LEVEL" = "INFO"
+  }
+}
 
 module "lambda" {
   source  = "cloudposse/lambda-function/aws"
@@ -60,14 +68,9 @@ module "lambda" {
     entry_point = var.docker_lambda_entry_point
   }
 
-  # todo: add default lambda_environment variables
-  # lambda_environment = {
-  #   "variables" = {
-  #     "PLATFORM"     = "aws_lambda",
-  #     "LOGURU_LEVEL" = "INFO"
-  #   }
-  # }
-
+  lambda_environment = {
+    "variables" = var.lambda_environment_variables
+  }
 
   # v2 feature
   # vpc_config = {
