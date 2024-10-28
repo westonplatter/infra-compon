@@ -1,35 +1,11 @@
 # -----------------------------------------------------------------------------
-# ECR
-# -----------------------------------------------------------------------------
-variable "ecr_max_image_count" {
-  type    = number
-  default = 10
-}
-
-variable "ecr_protected_tags" {
-  type    = list(string)
-  default = ["main"]
-}
-
-variable "ecr_image_tag_mutability" {
-  type    = string
-  default = "MUTABLE"
-}
-
-
-module "ecr" {
-  source  = "cloudposse/ecr/aws"
-  version = "v0.41.0"
-
-  context              = module.this.context
-  image_tag_mutability = var.ecr_image_tag_mutability
-  max_image_count      = var.ecr_max_image_count
-  protected_tags       = var.ecr_protected_tags
-}
-
-# -----------------------------------------------------------------------------
 # Lambda
 # -----------------------------------------------------------------------------
+
+variable "ecr_repository_url" {
+  type = string
+  description = "The URL of the ECR repository"
+}
 
 variable "lambda_architecture" {
   type        = string
@@ -55,18 +31,34 @@ variable "lambda_cloudwatch_logs_retention_in_days" {
   description = "The retention period of the cloudwatch logs in days, default is 7"
 }
 
+variable "docker_lambda_command" {
+  type = list(string)
+  description = "The command to run in the lambda function" 
+}
+
+variable "docker_lambda_entry_point" {
+  type = list(string)
+  description = "The entry point to run in the lambda function"
+  default = []
+}
+
+
 module "lambda" {
   source  = "cloudposse/lambda-function/aws"
   context = module.this.context
 
   function_name                     = module.this.id
-  image_uri                         = module.ecr.repository_url
+  image_uri                         = var.ecr_repository_url
   package_type                      = "Image"
   architectures                     = [var.lambda_architecture]
   cloudwatch_logs_retention_in_days = var.lambda_cloudwatch_logs_retention_in_days
   ssm_parameter_names               = []
   timeout                           = var.lambda_timeout
   memory_size                       = var.lambda_memory_size
+  image_config = {
+    command = var.docker_lambda_command
+    entry_point = var.docker_lambda_entry_point
+  }
 
   # todo: add default lambda_environment variables
   # lambda_environment = {
@@ -76,11 +68,6 @@ module "lambda" {
   #   }
   # }
 
-  # todo: add image_config
-  # image_config = {
-  #   command = ["python", "my_script.py"]
-  #   entry_point = []
-  # }
 
   # v2 feature
   # vpc_config = {
