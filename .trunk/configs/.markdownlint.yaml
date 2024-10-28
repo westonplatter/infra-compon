@@ -3,6 +3,7 @@ extends: markdownlint/style/prettier
 
 # Disable MD033 - Inline HTML
 MD033: false
+MD040: false
 # Optional: You can also be more specific and only allow certain HTML tags
 # MD033:
 #   allowed_elements:

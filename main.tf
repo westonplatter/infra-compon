@@ -82,6 +82,7 @@ variable "lambda_environment_variables" {
 
 module "lambda" {
   source  = "cloudposse/lambda-function/aws"
+  version = "v0.6.1"
   context = module.this.context
 
   function_name                     = module.this.id
