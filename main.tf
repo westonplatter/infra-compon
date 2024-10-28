@@ -2,7 +2,36 @@
 # Lambda
 # -----------------------------------------------------------------------------
 
-variable "ecr_repository_url" {
+#
+# When there is an existing lambda function, we can use this to get the image URI
+#
+data "external" "lambda_properties_code" {
+  program = [
+    "sh", 
+    "-c", 
+    <<-EOF
+      set -e
+      RESULT=$(aws lambda get-function --function-name ${module.this.id} --query 'Code' --output json) || RESULT="{\"Code\": \"null\"}"
+      echo "$RESULT"
+    EOF
+  ]
+  depends_on = [ module.this ]
+}
+
+locals {
+  full_ecr_image_url = try(
+    data.external.lambda_properties_code.result.ImageUri,
+    "${var.ecr_repository}:${var.first_deploy_ecr_image_tag}"
+  )
+}
+
+variable "first_deploy_ecr_image_tag" {
+  type        = string
+  description = "The initial image tag to use for the first deployment of the Lambda function"
+  default     = "latest"
+}
+
+variable "ecr_repository" {
   type = string
   description = "The URL of the ECR repository"
 }
@@ -56,7 +85,7 @@ module "lambda" {
   context = module.this.context
 
   function_name                     = module.this.id
-  image_uri                         = var.ecr_repository_url
+  image_uri                         = local.full_ecr_image_url
   package_type                      = "Image"
   architectures                     = [var.lambda_architecture]
   cloudwatch_logs_retention_in_days = var.lambda_cloudwatch_logs_retention_in_days
@@ -77,4 +106,9 @@ module "lambda" {
   #   subnet_ids         = module.vpc.private_subnet_ids
   #   security_group_ids = [module.sg_lambda_prtmgt.id]
   # }
+}
+
+
+output "lambda_image_uri" {
+  value = local.full_ecr_image_url
 }
