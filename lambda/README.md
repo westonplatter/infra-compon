@@ -1,11 +1,20 @@
 # Infra Components - Lambda
 
-## Generate README.md
+## Inputs specific to module
+
+- `docker_lambda_command`: The command to run in the lambda function
+- `docker_lambda_entry_point`: The entry point to run in the lambda function
+- `ecr_repository`: The URL of the ECR repository. For example: 123456789012.dkr.ecr.us-east-1.amazonaws.com/{namespace}-{stage}-{name}
+- `first_deploy_ecr_image_tag`: The initial image tag to use for the first deployment of the Lambda function
+- `lambda_architecture`: The architecture of the lambda function: possible values are 'x86_64' and 'arm64'
+- `lambda_cloudwatch_logs_retention_in_days`: The retention period of the cloudwatch logs in days, default is 7
+- `lambda_environment_variables`: The environment variables to set in the lambda function
+- `lambda_memory_size`: The memory size of the lambda function in megabytes, default is 128
+- `lambda_timeout`: The timeout of the lambda function in seconds, default is 30
+
+## Generate docs
 
 ```
-# cd to this folder,
-cd example/step3
-
 # install terraform-docs
 brew install terraform-docs
 
@@ -28,7 +37,7 @@ terraform-docs markdown table --output-file README.md --output-mode inject  .
 
 | Name                                                            | Version |
 | --------------------------------------------------------------- | ------- |
-| <a name="provider_external"></a> [external](#provider_external) | 2.3.4   |
+| <a name="provider_external"></a> [external](#provider_external) | >= 1.1  |
 
 ## Modules
 
