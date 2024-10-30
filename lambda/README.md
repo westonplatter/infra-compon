@@ -1,6 +1,6 @@
 # Infra Components - Lambda
 
-## Inputs specific to module
+## Terraform variables you'll likely want to adjust
 
 - `docker_lambda_command`: The command to run in the lambda function
 - `docker_lambda_entry_point`: The entry point to run in the lambda function
