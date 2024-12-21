@@ -64,3 +64,38 @@ resource "aws_iam_role_policy" "ssm_access" {
     ]
   })
 }
+
+
+# resource "aws_cloudwatch_event_bus" "default" {
+#   name = "default"
+#   tags = module.this.tags
+# }
+
+resource "aws_cloudwatch_event_rule" "schedules" {
+  schedule_expression = each.value.schedule_expression
+  event_bus_name      = "default"
+  tags = module.this.tags
+  
+  for_each = var.aws_cloudwatch_event_triggers
+  name                = "${module.this.id}-${each.key}"
+  description         = "Schedule for Lambda Function - ${each.key}"
+}
+
+resource "aws_cloudwatch_event_target" "schedule_lambda" {
+  target_id = "processing_lambda"
+  arn       = module.lambda.arn
+
+  for_each = var.aws_cloudwatch_event_triggers
+  rule      = aws_cloudwatch_event_rule.schedules[each.key].name
+  input = each.value.input
+}
+
+resource "aws_lambda_permission" "allow_events_bridge_to_run_lambda" {
+  action        = "lambda:InvokeFunction"
+  function_name = module.lambda.function_name
+  principal     = "events.amazonaws.com"
+
+  for_each = var.aws_cloudwatch_event_triggers
+  statement_id  = "AllowExecutionFromCloudWatch-${each.key}"
+  source_arn    = aws_cloudwatch_event_rule.schedules[each.key].arn
+}
