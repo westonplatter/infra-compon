@@ -66,11 +66,6 @@ resource "aws_iam_role_policy" "ssm_access" {
 }
 
 
-# resource "aws_cloudwatch_event_bus" "default" {
-#   name = "default"
-#   tags = module.this.tags
-# }
-
 resource "aws_cloudwatch_event_rule" "schedules" {
   schedule_expression = each.value.schedule_expression
   event_bus_name      = "default"
