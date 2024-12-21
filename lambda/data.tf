@@ -1,3 +1,6 @@
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
 #
 # When there is an existing lambda function, we can use this to get the image URI
 #

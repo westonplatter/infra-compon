@@ -57,3 +57,9 @@ variable "lambda_environment_variables" {
     "LOGURU_LEVEL" = "INFO"
   }
 }
+
+variable "ssm_parameter_names" {
+  description = "List of SSM Parameter Store parameter names to grant access to"
+  type        = list(string)
+  default     = []
+}
