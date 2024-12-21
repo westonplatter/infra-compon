@@ -1,4 +1,4 @@
-# Infra Components - Lambda
+# Infra Components - Lambda EventBridge
 
 ## Terraform variables you'll likely want to adjust
 
