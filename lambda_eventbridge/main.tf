@@ -31,6 +31,8 @@ module "lambda" {
     "variables" = var.lambda_environment_variables
   }
 
+  custom_iam_policy_arns = var.custom_iam_policy_arns
+
   ssm_parameter_names               = var.ssm_parameter_names
 
   # v2 feature

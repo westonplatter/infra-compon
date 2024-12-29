@@ -69,3 +69,9 @@ variable "aws_cloudwatch_event_triggers" {
   type        = map(any)
   default     = {}
 }
+
+variable "custom_iam_policy_arns" {
+  description = "List of custom policy ARNs to grant access to"
+  type        = list(string)
+  default     = []
+}
