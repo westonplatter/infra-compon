@@ -1,5 +1,75 @@
 # Infra Components - Lambda EventBridge
 
+This component is used to create a lambda function that is triggered by an eventbridge event.
+
+![Lambda EventBridge](./lambda_eventbridge.drawio.png)
+
+## Example
+
+```terraform
+provider "aws" {
+  region = "us-east-1"
+}
+
+module "label_lambda_eventbridge" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  namespace = var.namespace
+  stage     = var.stage
+  name      = "example-eventbridge"
+  enabled   = true
+}
+
+locals {
+  aws_cloudwatch_event_triggers = {
+    schedule_everyday_at_10am_utc = {
+      schedule_expression = "cron(0 10 * * ? *)"  # 10am UTC
+      event_bus_name      = "${module.label_lambda_eventbridge.id}-default"
+      input = jsonencode({
+        foo = {
+          bar = [1, 2]
+        }
+      })
+    }
+    schedule_first_day_of_month = {
+      schedule_expression = "cron(0 0 1 * *)"  # First day of month at 12am UTC
+      event_bus_name      = "${module.label_lambda_eventbridge.id}-default"
+      input = jsonencode({
+        foo = {
+          bar = [3, 4]
+        }
+      })
+    }
+    schedule_every_friday_at_4pm_utc = {
+      schedule_expression = "cron(0 16 * * FRI)"  # Every Friday at 4pm UTC
+      event_bus_name      = "${module.label_lambda_eventbridge.id}-default"
+      input = jsonencode({
+        foo = {
+          bar = [5, 6]
+        }
+      })
+  }
+}
+
+module "lambda_example_eventbridge" {
+  source = "git::ssh://git@github.com/westonplatter/simple-infra-components.git//lambda_eventbridge?ref=main"
+
+  context                    = module.label_lambda_eventbridge.context
+  ecr_repository             = var.eventbridge_ecr_arn
+  docker_lambda_command      = ["app.lambda_handler"] # the Docker Image will supply the command via CMD
+  docker_lambda_entry_point  = []                     # the Docker Image will supply the entrypoint via ENTRYPOINT
+  lambda_architecture        = "arm64"
+  first_deploy_ecr_image_tag = "first_deploy"
+  ssm_parameter_names = [
+    "/prod/polygon/api_key" # if you have SSM Parameter Store, you can access it here
+  ]
+
+  aws_cloudwatch_event_triggers = local.aws_cloudwatch_event_triggers
+}
+
+```
+
 ## Terraform variables you'll likely want to adjust
 
 - `docker_lambda_command`: The command to run in the lambda function
@@ -68,6 +138,7 @@ terraform-docs markdown table --output-file README.md --output-mode inject  .
 | <a name="input_attributes"></a> [attributes](#input_attributes)                                                                                           | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element.                                                                                                                                                                                                                                                                                                                                                                                        | `list(string)` | `[]`                                                                                                                                                                                                                                                                                                                                                                                                                                                              |    no    |
 | <a name="input_aws_cloudwatch_event_triggers"></a> [aws_cloudwatch_event_triggers](#input_aws_cloudwatch_event_triggers)                                  | List of AWS CloudWatch Event triggers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `map(any)`     | `{}`                                                                                                                                                                                                                                                                                                                                                                                                                                                              |    no    |
 | <a name="input_context"></a> [context](#input_context)                                                                                                    | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional_tag_map, which are merged.                                                                                                                                                                                                                                                                                                                            | `any`          | <pre>{<br> "additional_tag_map": {},<br> "attributes": [],<br> "delimiter": null,<br> "descriptor_formats": {},<br> "enabled": true,<br> "environment": null,<br> "id_length_limit": null,<br> "label_key_case": null,<br> "label_order": [],<br> "label_value_case": null,<br> "labels_as_tags": [<br> "unset"<br> ],<br> "name": null,<br> "namespace": null,<br> "regex_replace_chars": null,<br> "stage": null,<br> "tags": {},<br> "tenant": null<br>}</pre> |    no    |
+| <a name="input_custom_iam_policy_arns"></a> [custom_iam_policy_arns](#input_custom_iam_policy_arns)                                                       | List of custom policy ARNs to grant access to                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `list(string)` | `[]`                                                                                                                                                                                                                                                                                                                                                                                                                                                              |    no    |
 | <a name="input_delimiter"></a> [delimiter](#input_delimiter)                                                                                              | Delimiter to be used between ID elements.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `string`       | `null`                                                                                                                                                                                                                                                                                                                                                                                                                                                            |    no    |
 | <a name="input_descriptor_formats"></a> [descriptor_formats](#input_descriptor_formats)                                                                   | Describe additional descriptors to be output in the `descriptors` output map.<br>Map of maps. Keys are names of descriptors. Values are maps of the form<br>`{<br>   format = string<br>   labels = list(string)<br>}`<br>(Type is `any` so the map values can later be enhanced to provide additional options.)<br>`format` is a Terraform format string to be passed to the `format()` function.<br>`labels` is a list of labels, in order, to pass to `format()` function.<br>Label values will be normalized before being passed to `format()` so they will be<br>identical to how they appear in `id`.<br>Default is `{}` (`descriptors` output will be empty). | `any`          | `{}`                                                                                                                                                                                                                                                                                                                                                                                                                                                              |    no    |
 | <a name="input_docker_lambda_command"></a> [docker_lambda_command](#input_docker_lambda_command)                                                          | The command to run in the lambda function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `list(string)` | n/a                                                                                                                                                                                                                                                                                                                                                                                                                                                               |   yes    |

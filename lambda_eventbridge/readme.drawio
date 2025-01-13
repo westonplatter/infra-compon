@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.5">
+  <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
+    <mxGraphModel dx="1314" dy="831" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UEzPUAAOIrF-is8g5C7q-75" value="AWS Cloud" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;labelBackgroundColor=#ffffff;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="70" width="440" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="UEzPUAAOIrF-is8g5C7q-108" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=none;dashed=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;align=center;verticalAlign=top;" parent="UEzPUAAOIrF-is8g5C7q-75" vertex="1">
+          <mxGeometry x="10" y="40" width="420" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="UEzPUAAOIrF-is8g5C7q-108" source="k6QqzRV5Goqya3b2VjuW-2" target="k6QqzRV5Goqya3b2VjuW-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-17" value="1st Day of the Month" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="k6QqzRV5Goqya3b2VjuW-14">
+          <mxGeometry x="-0.4052" y="2" relative="1" as="geometry">
+            <mxPoint x="3" y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-2" value="AWS Event Bridge" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;" vertex="1" parent="UEzPUAAOIrF-is8g5C7q-108">
+          <mxGeometry x="20" y="20" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-3" value="AWS Lambda" style="outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;labelBackgroundColor=#ffffff;spacingTop=6;" vertex="1" parent="UEzPUAAOIrF-is8g5C7q-108">
+          <mxGeometry x="330" y="20" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="UEzPUAAOIrF-is8g5C7q-108">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="98" y="90" as="sourcePoint" />
+            <mxPoint x="330" y="90" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-19" value="Every Friday at 4pm UTC" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="k6QqzRV5Goqya3b2VjuW-18">
+          <mxGeometry x="-0.4052" y="2" relative="1" as="geometry">
+            <mxPoint x="13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="UEzPUAAOIrF-is8g5C7q-108">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="98" y="30" as="sourcePoint" />
+            <mxPoint x="330" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k6QqzRV5Goqya3b2VjuW-21" value="Every day at 10am UTC" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="k6QqzRV5Goqya3b2VjuW-20">
+          <mxGeometry x="-0.4052" y="2" relative="1" as="geometry">
+            <mxPoint x="13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
