@@ -2,22 +2,13 @@
 
 ## Overview
 
-This is a collection of AWS specific components focused on helping
-beginners, solopreneurs, and small teams deploy infrastructure quickly
-and with as few headaches as possible.
+This is a collection of AWS specific components focused on helping beginners, 'solopreneurs', and small teams deploy infrastructure quickly and with as few headaches as possible. Much of the code is inspired by Cloud Posse's [terraform-aws-modules](https://github.com/terraform-aws-modules/terraform-aws-modules), and relies on their terraform modules. This project expands on the modules and tries to provide a "batteries included" experience for users wanting to application services.
 
-All software makes trade-offs, and this project is no exception. I/We
-have intentionally made the following trade-offs:
+All software makes trade-offs, including this project. This project has intentionally made the following trade-offs:
 
-- Keep it dead simple. If you need more, use other open source modules.
+- Keep it explicitly simple.
 - Convention over configuration.
-- Use sane defaults for that work for individuals to ship projects. Ie, batteries included.
-
-Much of the code is inspired by Cloud Posse's
-[terraform-aws-modules](https://github.com/terraform-aws-modules/terraform-aws-modules),
-and pulls in their terraform modules. This repo/project differs from Cloud Posse's
-approach by providing opinionated defaults to help get things going for
-those who are just starting out.
+- Use sane defaults that help individuals ship projects (batteries included).
 
 ## Components
 
@@ -34,3 +25,7 @@ Each component is a terraform module that can be deployed independently and has 
 ## License
 
 This project is licensed under the [BSD-3](./LICENSE) license.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a PR.
