@@ -15,8 +15,8 @@ All software makes trade-offs, including this project. This project has intentio
 Each component is a terraform module that can be deployed independently and has it's own README + docs.
 
 - [x] [ECR](./ecr)
-- [x] [Lambda](./lambda)
-- [x] [Lambda Eventbridge](./lambda_eventbridge)
+- [x] [Lambda - Docker](./lambda)
+- [x] [Lambda - Docker Eventbridge](./lambda_docker_eventbridge)
 - [ ] Lambda Api Gateway
 - [ ] SQS
 - [ ] Lambda Api SQS

@@ -1,8 +1,8 @@
-# Infra Components - Lambda EventBridge
+# Lambda Docker EventBridge
 
 This component is used to create a lambda function that is triggered by an eventbridge event.
 
-![Lambda EventBridge](./lambda_eventbridge.drawio.png)
+![Lambda Docker EventBridge](./lambda_docker_eventbridge.drawio.png)
 
 ## Example
 
@@ -17,7 +17,7 @@ module "label_lambda_eventbridge" {
 
   namespace = var.namespace
   stage     = var.stage
-  name      = "example-eventbridge"
+  name      = "example-docker-eventbridge"
   enabled   = true
 }
 
@@ -49,11 +49,12 @@ locals {
           bar = [5, 6]
         }
       })
+    }
   }
 }
 
 module "lambda_example_eventbridge" {
-  source = "git::ssh://git@github.com/westonplatter/simple-infra-components.git//lambda_eventbridge?ref=main"
+  source = "git::ssh://git@github.com/westonplatter/simple-infra-components.git//lambda_docker_eventbridge?ref=main"
 
   context                    = module.label_lambda_eventbridge.context
   ecr_repository             = var.eventbridge_ecr_arn
